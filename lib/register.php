@@ -90,7 +90,7 @@ function gutenberg_add_admin_bar_edit_link( $wp_admin_bar ) {
 	$classic_url = get_edit_post_link( $post->ID, 'raw' );
 	add_filter( 'get_edit_post_link', 'gutenberg_filter_edit_post_link', 10, 3 );
 
-	if ( empty( $classic_url ) ) {
+	if ( empty( $classic_url ) || ! post_type_supports( $post->post_type, 'editor' ) ) {
 		return;
 	}
 
@@ -146,7 +146,7 @@ add_action( 'admin_init', 'gutenberg_add_edit_links_filters' );
  * @return array          Updated post actions.
  */
 function gutenberg_add_edit_links( $actions, $post ) {
-	if ( ! gutenberg_can_edit_post( $post->ID ) ) {
+	if ( ! gutenberg_can_edit_post( $post->ID ) || ! post_type_supports( $post->post_type, 'editor' ) ) {
 		return $actions;
 	}
 
@@ -221,7 +221,7 @@ function gutenberg_get_edit_post_url( $post_id ) {
  */
 function gutenberg_filter_edit_post_link( $url, $post_id, $context ) {
 	$post = get_post( $post_id );
-	if ( gutenberg_can_edit_post( $post_id ) && gutenberg_post_has_blocks( $post_id ) ) {
+	if ( gutenberg_can_edit_post( $post_id ) && gutenberg_post_has_blocks( $post_id ) && post_type_supports( get_post_type( $post_id ), 'editor' ) ) {
 		$gutenberg_url = gutenberg_get_edit_post_url( $post->ID );
 		if ( 'display' === $context ) {
 			$gutenberg_url = esc_url( $gutenberg_url );
