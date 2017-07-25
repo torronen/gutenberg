@@ -99,7 +99,7 @@ class Admin_Test extends WP_UnitTestCase {
 		$post_id = $this->factory()->post->create( array(
 			'post_type' => 'not_shown_in_rest',
 		) );
-		$actions = $actions = apply_filters( 'post_row_actions', $original_actions, get_post( $post_id) );
+		$actions = apply_filters( 'post_row_actions', $original_actions, get_post( $post_id ) );
 		$this->assertArrayNotHasKey( 'gutenberg hide-if-no-js', $actions );
 		$this->assertArrayNotHasKey( 'classic hide-if-no-js', $actions );
 
@@ -110,7 +110,7 @@ class Admin_Test extends WP_UnitTestCase {
 		$post_id = $this->factory()->post->create( array(
 			'post_type' => 'not_supports_editor',
 		) );
-		$actions = $actions = apply_filters( 'post_row_actions', $original_actions, get_post( $post_id) );
+		$actions = apply_filters( 'post_row_actions', $original_actions, get_post( $post_id ) );
 		$this->assertArrayNotHasKey( 'gutenberg hide-if-no-js', $actions );
 		$this->assertArrayNotHasKey( 'classic hide-if-no-js', $actions );
 
