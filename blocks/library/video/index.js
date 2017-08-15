@@ -14,6 +14,8 @@ import { Placeholder } from '@wordpress/components';
 import { registerBlockType, source } from '../../api';
 import MediaUploadButton from '../../media-upload-button';
 import Editable from '../../editable';
+import InspectorControls from '../../inspector-controls';
+import BlockDescription from '../../block-description';
 
 const { attr, children } = source;
 
@@ -67,6 +69,13 @@ registerBlockType( 'core/video', {
 
 		/* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role, jsx-a11y/click-events-have-key-events */
 		return [
+			focus && (
+				<InspectorControls key="inspector">
+					<BlockDescription>
+						<p>{ __( 'Video, locally hosted, locally sourced.' ) }</p>
+					</BlockDescription>
+				</InspectorControls>
+			),
 			<figure key="video" className={ className }>
 				<video controls src={ src } onClick={ setFocus } />
 				{ ( caption && caption.length > 0 ) || !! focus ? (
