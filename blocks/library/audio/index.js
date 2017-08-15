@@ -14,6 +14,8 @@ import { Placeholder } from '@wordpress/components';
 import './style.scss';
 import { registerBlockType, source } from '../../api';
 import MediaUploadButton from '../../media-upload-button';
+import InspectorControls from '../../inspector-controls';
+import BlockDescription from '../../block-description';
 
 const { attr } = source;
 
@@ -31,7 +33,7 @@ registerBlockType( 'core/audio', {
 		},
 	},
 
-	edit( { attributes, setAttributes, className } ) {
+	edit( { attributes, setAttributes, focus, className } ) {
 		const { src } = attributes;
 		const onSelectAudio = ( media ) => {
 			if ( media && media.url ) {
@@ -60,6 +62,13 @@ registerBlockType( 'core/audio', {
 
 		/* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/onclick-has-role, jsx-a11y/click-events-have-key-events */
 		return [
+			focus && (
+				<InspectorControls key="inspector">
+					<BlockDescription>
+						<p>{ __( 'Audio, locally hosted, locally sourced.' ) }</p>
+					</BlockDescription>
+				</InspectorControls>
+			),
 			<div key="audio">
 				<audio controls="controls" src={ src } />
 			</div>,
